@@ -1,0 +1,43 @@
+#Importando as bibliotecas
+import pandas as pd
+import matplotlib.pyplot as plt
+plt.style.use("seaborn")
+
+#Upload do arquivo
+from google.colab import files
+from google.colab import output
+nome_arq = input('Digite o nome do arquivo: ')
+print("Selecione o arquivo .xlsx")
+arq = files.upload()
+
+#Criando o DataFrame
+df = pd.read_excel(nome_arq + ".xlsx")
+df.head()
+
+#Opções 
+
+print('Digite: \n1 ler a Quantidade de linhas da tabela \n2 Verificar os tipos de dados \n3 soma do valor das Vendas \n4 Total de produtos vendidos \n5 para a maior venda  \n6 para a menor venda \n7 total de vendas \n8 gráfico para o total de vendas')
+opc = input('')
+
+output.clear()
+
+if opc == "1":  
+  print(df.shape)
+elif opc == "2":
+  print(df.dtypes)
+elif opc == "3":
+  print(df["Vendas"].sum())
+elif opc == "4":
+  print(df["Qtde"].sum())
+elif opc == "5":
+  print(df["Vendas"].max())
+elif opc == "6":
+  print(df["Vendas"].min())
+elif opc == "7":
+  print(df.groupby("Vendas")["Qtde"].sum().sort_values(ascending=False))
+elif opc == "8":
+  df.groupby("Vendas")["Qtde"].sum().sort_values(ascending=True).plot.barh(title="Total Produtos Vendidos")
+  plt.xlabel("Quantidade")
+  plt.ylabel("Vendas");
+else:
+  print('Digite uma opção válida')
